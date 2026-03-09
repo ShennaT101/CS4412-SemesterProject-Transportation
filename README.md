@@ -85,6 +85,7 @@ This cluster shows the highest transportation service indices and truck tonnage 
 ---
 
 ## Repository Structure
+.idea
 data/
 Monthly_Transportation_Statistics.csv
 
@@ -92,7 +93,8 @@ notebooks/
 M2_analysis.ipynb
 
 docs/
-M2_summary.pdf
+CS4412_M2_Summary.pdf
+M1_Project_Proposal.pdf
 
 README.md
 
