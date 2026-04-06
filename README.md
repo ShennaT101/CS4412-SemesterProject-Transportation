@@ -1,125 +1,144 @@
-# Transportation Data Mining (CS 4412 – M2)
+# 🚦 Transportation Pattern Discovery (K-Means + PCA)
 
-## Overview
+## 📌 Overview
+This project implements a complete data mining pipeline on the **Monthly Transportation Statistics dataset** to uncover patterns in transportation activity and safety outcomes across multiple modes, including aviation, rail, and freight systems.
 
-This project is part of the CS 4412 Data Mining course milestone M2: Initial Implementation. The goal of this milestone is to explore a dataset, perform exploratory data analysis (EDA), preprocess the data, and apply an initial data mining technique to discover patterns.
-
-The dataset contains monthly transportation statistics including safety metrics, freight activity indicators, and transportation service indices. The analysis focuses on identifying patterns in transportation activity and safety outcomes.
-
----
-
-## Dataset
-
-Dataset: Monthly Transportation Statistics
-
-The dataset includes variables such as:
-
-- Air safety fatalities
-- Highway fatality rates
-- Rail fatalities
-- Transportation Services Index (freight, passenger, combined)
-- Truck tonnage index
-
-These variables provide insight into transportation activity and safety trends over time.
+The workflow combines:
+- Data preprocessing and feature selection  
+- Feature scaling (standardization)  
+- K-Means clustering  
+- PCA for visualization  
+- Decision Tree classification for interpretability  
 
 ---
 
-## Exploratory Data Analysis
-
-Exploratory analysis was performed to understand the dataset structure and relationships between variables.
-
-Key steps included:
-
-- Summary statistics using Pandas
-- Correlation analysis between transportation indicators
-- Histograms and boxplots to inspect distributions
-- Scatter plots to explore relationships between freight activity and transportation metrics
-
-The analysis revealed several moderate correlations among transportation safety indicators and freight activity measures.
+## ⚠️ Dataset Note
+The original proposal (M1) referenced an automobile sales dataset. This project was updated in M2 to use the **Monthly Transportation Statistics dataset**, which better supports multi-modal transportation analysis.
 
 ---
 
-## Data Preprocessing
+## ⚙️ Methodology
 
-Several preprocessing steps were applied before performing clustering:
-
-- Selected numeric features from the dataset
-- Removed columns containing only missing values
+### Data Preprocessing
+- Removed Index column
+- Dropped sparse features (<50% non-null)
 - Replaced infinite values with NaN
-- Imputed missing values using column means
-- Standardized features using z-score normalization
+- Applied mean imputation
 
-Standardization ensures that features with larger numeric ranges do not dominate distance calculations during clustering.
+### Clustering
+- K-Means clustering
+- Evaluated using Elbow Method + Silhouette Score
 
----
+### Dimensionality Reduction
+- PCA for visualization
 
-## Mining Technique: Clustering
-
-K-Means clustering was applied to identify natural groupings within the transportation data.
-
-Steps performed:
-
-1. Standardized numeric features
-2. Applied the elbow method to determine the optimal number of clusters
-3. Selected **k = 3 clusters**
-4. Visualized clusters using **Principal Component Analysis (PCA)**
+### Interpretation
+- Cluster centroids analyzed
+- Decision Tree used for feature importance
 
 ---
 
-## Results
+## 📊 Key Results
 
-The clustering analysis revealed three distinct transportation patterns:
+### Silhouette Scores
+| k | Score |
+|--|------|
+| 2 | 0.483 |
+| 3 | 0.396 |
+| 4 | 0.423 |
+| 5 | 0.473 |
+| 6 | 0.489 |
+| 7 | **0.510** |
+| 8 | 0.495 |
+| 9 | 0.495 |
 
-**Cluster 0 – Moderate Transportation Activity**
-
-Represents periods with moderate freight movement and moderate safety metrics. These observations likely correspond to typical operational transportation conditions.
-
-**Cluster 1 – Higher Safety Risk Periods**
-
-Characterized by higher fatality-related indicators but lower freight activity. These periods may correspond to months with unusual transportation incidents or environmental factors affecting safety.
-
-**Cluster 2 – High Transportation Activity**
-
-This cluster shows the highest transportation service indices and truck tonnage values. These observations likely correspond to periods with strong freight and passenger transportation demand.
-
----
-
-## Repository Structure
-.idea
-
-data/
-Monthly_Transportation_Statistics.csv
-
-docs/
-CS4412_M2_Summary.pdf
-M1_Project_Proposal.pdf
-
-notebooks/
-M2_analysis.ipynb
-
-README.md
-
+- Best numerical separation: **k=7**
+- Final model used: **k=3 (interpretability)**
 
 ---
 
-## Future Work (M3)
+## 🧠 Cluster Insights
 
-Future work will expand the analysis by applying additional data mining techniques such as:
+### Cluster 0 — High Activity, High Risk
+- Highest fatalities  
+- High freight movement  
 
-- Hierarchical clustering
-- DBSCAN clustering
-- Anomaly detection
+### Cluster 1 — High Activity, Lower Risk
+- Highest overall activity  
+- Lower fatalities  
 
-These methods will help further investigate unusual transportation patterns and cluster structures.
+### Cluster 2 — Moderate Activity
+- Balanced system behavior  
 
 ---
 
-## Technologies Used
+## 📈 Visualization
+- PCA confirms clear cluster separation  
+- See: `images/pca_plot.png`
 
-- Python
-- Pandas
-- NumPy
-- Matplotlib
-- Seaborn
-- Scikit-learn
-- Jupyter Notebook
+---
+
+## 📁 Project Structure
+
+```
+.
+├── data/
+│   └── Monthly_Transportation_Statistics_20260308.csv
+│
+├── docs/
+│   ├── M1_Project_Proposal.pdf
+│   ├── CS4412_M2_Summary.pdf
+│   └── CS4412_M3CompleteImplementation_Tawiah_Shenna.pdf
+│
+├── images/
+│   └── pca_plot.png
+│
+├── notebooks/
+│   ├── M2_Analysis.ipynb
+│   └── M3_CompleteImplementation.ipynb
+│
+├── report/
+│
+└── README.md
+```
+
+---
+
+## 🚀 How to Run
+
+### Install dependencies
+```bash
+pip install pandas numpy matplotlib seaborn scikit-learn
+```
+
+### Run notebook
+```bash
+jupyter notebook notebooks/M3_CompleteImplementation.ipynb
+```
+
+---
+
+## ⚖️ Key Insight
+Although **k=7 achieved the highest silhouette score**,  
+**k=3 was selected** to balance interpretability and meaningful cluster definitions.
+
+---
+
+## ⚠️ Limitations
+- Loss of data from dropping sparse columns  
+- K-Means assumptions (spherical clusters)  
+- PCA reduces interpretability  
+- Mean imputation may introduce bias  
+
+---
+
+## 🔮 Future Work (M4)
+- Improve feature engineering  
+- Add deeper statistical validation  
+- Expand real-world implications  
+
+---
+
+## 👤 Author
+**Shenna Tawiah**  
+CS 4412 – Data Mining
